@@ -25,6 +25,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.chimkontran.madball.Madball;
 import com.chimkontran.madball.scenes.Hub;
 import com.chimkontran.madball.sprites.Ball;
+import com.chimkontran.madball.system.Controller;
 import com.chimkontran.madball.system.InputTracker;
 import com.chimkontran.madball.tools.Box2DWorldCreator;
 
@@ -50,6 +51,9 @@ public class PlayScreen implements Screen {
     private World world;
     private Box2DDebugRenderer debugRenderer;
     private Ball ball;
+
+    // Controller
+    Controller controller;
 
     public PlayScreen(Madball game){
         // Add Texture
@@ -83,6 +87,8 @@ public class PlayScreen implements Screen {
         // Create World
         new Box2DWorldCreator(world, map);
 
+        // Create controller
+        controller = new Controller();
     }
 
     public TextureAtlas getTextureAtlas()
@@ -96,21 +102,37 @@ public class PlayScreen implements Screen {
     }
 
     public void handleInput(float dTime) {
-        // Handle user input
         float speed = 1f;
-        if (Gdx.input.isKeyPressed(Input.Keys.UP) && ball.box2dBody.getLinearVelocity().y <= 2)
-            ball.box2dBody.setLinearVelocity(new Vector2(ball.box2dBody.getLinearVelocity().x, speed));
-        if (Gdx.input.isKeyPressed(Input.Keys.DOWN) && ball.box2dBody.getLinearVelocity().y >= -2)
-            ball.box2dBody.setLinearVelocity(new Vector2(ball.box2dBody.getLinearVelocity().x, -speed));
-        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && ball.box2dBody.getLinearVelocity().x <= 2)
-            ball.box2dBody.setLinearVelocity(new Vector2(speed, ball.box2dBody.getLinearVelocity().y));
-        if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && ball.box2dBody.getLinearVelocity().x >= -2)
-            ball.box2dBody.setLinearVelocity(new Vector2(-speed, ball.box2dBody.getLinearVelocity().y));
 
+        // Handle user input WITH KEYBOARD
+//        if (Gdx.input.isKeyPressed(Input.Keys.UP) && ball.box2dBody.getLinearVelocity().y <= 2)
+//            ball.box2dBody.setLinearVelocity(new Vector2(ball.box2dBody.getLinearVelocity().x, speed));
+//        if (Gdx.input.isKeyPressed(Input.Keys.DOWN) && ball.box2dBody.getLinearVelocity().y >= -2)
+//            ball.box2dBody.setLinearVelocity(new Vector2(ball.box2dBody.getLinearVelocity().x, -speed));
+//        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && ball.box2dBody.getLinearVelocity().x <= 2)
+//            ball.box2dBody.setLinearVelocity(new Vector2(speed, ball.box2dBody.getLinearVelocity().y));
+//        if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && ball.box2dBody.getLinearVelocity().x >= -2)
+//            ball.box2dBody.setLinearVelocity(new Vector2(-speed, ball.box2dBody.getLinearVelocity().y));
+//
+//        // Handle when user NOT PRESSING key
+//        if (!Gdx.input.isKeyPressed(Input.Keys.UP) && !Gdx.input.isKeyPressed(Input.Keys.DOWN))
+//            ball.box2dBody.setLinearVelocity(new Vector2(ball.box2dBody.getLinearVelocity().x, 0));
+//        if (!Gdx.input.isKeyPressed(Input.Keys.LEFT) && !Gdx.input.isKeyPressed(Input.Keys.RIGHT))
+//            ball.box2dBody.setLinearVelocity(new Vector2(0, ball.box2dBody.getLinearVelocity().y));
+
+        // Handle user input WITH CONTROLLER
+        if (controller.isUpPressed() && ball.box2dBody.getLinearVelocity().y <= 2)
+            ball.box2dBody.setLinearVelocity(new Vector2(ball.box2dBody.getLinearVelocity().x, speed));
+        if (controller.isDownPressed() && ball.box2dBody.getLinearVelocity().y >= -2)
+            ball.box2dBody.setLinearVelocity(new Vector2(ball.box2dBody.getLinearVelocity().x, -speed));
+        if (controller.isRightPressed() && ball.box2dBody.getLinearVelocity().x <= 2)
+            ball.box2dBody.setLinearVelocity(new Vector2(speed, ball.box2dBody.getLinearVelocity().y));
+        if (controller.isLeftPressed() && ball.box2dBody.getLinearVelocity().x >= -2)
+            ball.box2dBody.setLinearVelocity(new Vector2(-speed, ball.box2dBody.getLinearVelocity().y));
         // Handle when user NOT PRESSING key
-        if (!Gdx.input.isKeyPressed(Input.Keys.UP) && !Gdx.input.isKeyPressed(Input.Keys.DOWN))
+        if (!controller.isUpPressed() && !controller.isDownPressed())
             ball.box2dBody.setLinearVelocity(new Vector2(ball.box2dBody.getLinearVelocity().x, 0));
-        if (!Gdx.input.isKeyPressed(Input.Keys.LEFT) && !Gdx.input.isKeyPressed(Input.Keys.RIGHT))
+        if (!controller.isLeftPressed() && !controller.isRightPressed())
             ball.box2dBody.setLinearVelocity(new Vector2(0, ball.box2dBody.getLinearVelocity().y));
     }
 
@@ -149,6 +171,9 @@ public class PlayScreen implements Screen {
         // Render Box2d Debug lines
         debugRenderer.render(world, gameCamera.combined);
 
+        // Render Controller
+        controller.draw();
+
         game.batch.setProjectionMatrix(gameCamera.combined);
         game.batch.begin();
         ball.draw(game.batch);
@@ -162,6 +187,7 @@ public class PlayScreen implements Screen {
     @Override
     public void resize(int width, int height) {
         gamePort.update(width, height);
+        controller.resize(width, height);
     }
 
     @Override

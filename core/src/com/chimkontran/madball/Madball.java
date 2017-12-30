@@ -11,7 +11,7 @@ public class Madball extends Game {
 	public static final int V_HEIGHT = 250;
 	public static final float PPM = 100; // Pixel per meter
 
-	public SpriteBatch batch;
+	public static SpriteBatch batch;
 
 	@Override
 	public void create () {
