@@ -33,7 +33,7 @@ public class Hub implements Disposable{
     Label countdownLabel;
 
     public Hub(SpriteBatch spriteBatch){
-        worldTimer = 300;
+        worldTimer = 60;
         timeCount = 0;
         score = 0;
         level = 1;
@@ -50,7 +50,7 @@ public class Hub implements Disposable{
         countdownTextLabel = new Label("TIME", new Label.LabelStyle(new BitmapFont(), Color.BLACK));
         scoreTextLabel = new Label("SCORE", new Label.LabelStyle(new BitmapFont(), Color.BLACK));
         levelLabel = new Label(String.format("%01d", level), new Label.LabelStyle(new BitmapFont(), Color.BLACK));
-        countdownLabel = new Label(String.format("%03d", worldTimer), new Label.LabelStyle(new BitmapFont(), Color.BLACK));
+        countdownLabel = new Label(String.format("%02d", worldTimer), new Label.LabelStyle(new BitmapFont(), Color.BLACK));
         scoreLabel = new Label(String.format("%06d", score), new Label.LabelStyle(new BitmapFont(), Color.BLACK));
 
         // Add table
@@ -62,6 +62,7 @@ public class Hub implements Disposable{
         table.add(scoreLabel).expandX();
         table.add(countdownLabel).expandX();
 
+        // Display table
         stage.addActor(table);
     }
 
@@ -69,4 +70,5 @@ public class Hub implements Disposable{
     public void dispose() {
         stage.dispose();
     }
+
 }

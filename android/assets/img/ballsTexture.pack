@@ -3,65 +3,65 @@ ballsTexture.png
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
+swat
+  rotate: false
+  xy: 1, 75
+  size: 512, 128
+  orig: 512, 128
+  offset: 0, 0
+  index: -1
 ak47
   rotate: false
-  xy: 1, 103
+  xy: 1, 49
   size: 231, 24
   orig: 231, 24
   offset: 0, 0
   index: -1
 ball1
   rotate: false
-  xy: 1, 1
+  xy: 515, 103
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: -1
 ball2
   rotate: false
-  xy: 103, 1
+  xy: 617, 103
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: -1
 ball3
   rotate: false
-  xy: 205, 1
+  xy: 719, 103
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: -1
 ball4
   rotate: false
-  xy: 307, 27
+  xy: 821, 103
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: -1
 ball5
   rotate: false
-  xy: 409, 27
+  xy: 923, 103
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: -1
 ball6
   rotate: false
-  xy: 511, 27
+  xy: 515, 1
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: -1
 ball7
   rotate: false
-  xy: 613, 27
-  size: 100, 100
-  orig: 100, 100
-  offset: 0, 0
-  index: -1
-swat
-  rotate: false
-  xy: 715, 27
+  xy: 617, 1
   size: 100, 100
   orig: 100, 100
   offset: 0, 0

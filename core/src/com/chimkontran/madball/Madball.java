@@ -15,8 +15,6 @@ public class Madball extends Game {
 
 	@Override
 	public void create () {
-//		InputTracker inputTracker = new InputTracker();
-//		Gdx.input.setInputProcessor(inputTracker);
 		batch = new SpriteBatch();
 		setScreen(new PlayScreen(this));
 	}

@@ -104,23 +104,7 @@ public class PlayScreen implements Screen {
     public void handleInput(float dTime) {
         float speed = 1f;
 
-        // Handle user input WITH KEYBOARD
-//        if (Gdx.input.isKeyPressed(Input.Keys.UP) && ball.box2dBody.getLinearVelocity().y <= 2)
-//            ball.box2dBody.setLinearVelocity(new Vector2(ball.box2dBody.getLinearVelocity().x, speed));
-//        if (Gdx.input.isKeyPressed(Input.Keys.DOWN) && ball.box2dBody.getLinearVelocity().y >= -2)
-//            ball.box2dBody.setLinearVelocity(new Vector2(ball.box2dBody.getLinearVelocity().x, -speed));
-//        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && ball.box2dBody.getLinearVelocity().x <= 2)
-//            ball.box2dBody.setLinearVelocity(new Vector2(speed, ball.box2dBody.getLinearVelocity().y));
-//        if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && ball.box2dBody.getLinearVelocity().x >= -2)
-//            ball.box2dBody.setLinearVelocity(new Vector2(-speed, ball.box2dBody.getLinearVelocity().y));
-//
-//        // Handle when user NOT PRESSING key
-//        if (!Gdx.input.isKeyPressed(Input.Keys.UP) && !Gdx.input.isKeyPressed(Input.Keys.DOWN))
-//            ball.box2dBody.setLinearVelocity(new Vector2(ball.box2dBody.getLinearVelocity().x, 0));
-//        if (!Gdx.input.isKeyPressed(Input.Keys.LEFT) && !Gdx.input.isKeyPressed(Input.Keys.RIGHT))
-//            ball.box2dBody.setLinearVelocity(new Vector2(0, ball.box2dBody.getLinearVelocity().y));
-
-        // Handle user input WITH CONTROLLER
+        // Handle user input WITH LEFT CONTROLLER
         if (controller.isUpPressed() && ball.box2dBody.getLinearVelocity().y <= 2)
             ball.box2dBody.setLinearVelocity(new Vector2(ball.box2dBody.getLinearVelocity().x, speed));
         if (controller.isDownPressed() && ball.box2dBody.getLinearVelocity().y >= -2)
@@ -129,11 +113,22 @@ public class PlayScreen implements Screen {
             ball.box2dBody.setLinearVelocity(new Vector2(speed, ball.box2dBody.getLinearVelocity().y));
         if (controller.isLeftPressed() && ball.box2dBody.getLinearVelocity().x >= -2)
             ball.box2dBody.setLinearVelocity(new Vector2(-speed, ball.box2dBody.getLinearVelocity().y));
+
         // Handle when user NOT PRESSING key
         if (!controller.isUpPressed() && !controller.isDownPressed())
             ball.box2dBody.setLinearVelocity(new Vector2(ball.box2dBody.getLinearVelocity().x, 0));
         if (!controller.isLeftPressed() && !controller.isRightPressed())
             ball.box2dBody.setLinearVelocity(new Vector2(0, ball.box2dBody.getLinearVelocity().y));
+
+        // Handle user input with RIGHT CONTROLLER
+        if (controller.isLookUpPressed())
+            ball.setLookingUp(true);
+        if (controller.isLookDownPressed())
+            ball.setLookingDown(true);
+        if (controller.isLookLeftPressed())
+            ball.setLookingLeft(true);
+        if (controller.isLookRightPressed())
+            ball.setLookingRight(true);
     }
 
 
@@ -142,17 +137,19 @@ public class PlayScreen implements Screen {
         // Handle user input
         handleInput(dTime);
 
+        // Set 60 frames per seconds
         world.step(1/60f, 6, 2);
 
+        // Update player
         ball.update(dTime);
 
         // Make camera follow Ball (player)
         gameCamera.position.x = ball.box2dBody.getPosition().x;
         gameCamera.position.y = ball.box2dBody.getPosition().y;
 
-
         // Update correct coordinate after changes
         gameCamera.update();
+
         // Only render what User can see
         renderer.setView(gameCamera);
     }
@@ -175,6 +172,8 @@ public class PlayScreen implements Screen {
         controller.draw();
 
         game.batch.setProjectionMatrix(gameCamera.combined);
+
+        // Render Ball (player)
         game.batch.begin();
         ball.draw(game.batch);
         game.batch.end();
@@ -213,5 +212,6 @@ public class PlayScreen implements Screen {
         renderer.dispose();
         debugRenderer.dispose();
         hub.dispose();
+        controller.dispose();
     }
 }
