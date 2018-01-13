@@ -63,6 +63,8 @@ public class Ball extends Sprite {
         setBounds(0, 0, BALL_WIDTH / Madball.PPM, BALL_HEIGHT / Madball.PPM);
         setRegion(ballLookRight);
     }
+
+    // Set LOOKING STATE
     public void setLookingUp(boolean state) {
         this.isLookingUp = state;
         this.isLookingDown = false;
@@ -87,6 +89,7 @@ public class Ball extends Sprite {
         this.isLookingUp = false;
         this.isLookingDown = false;
     }
+
     // Update Ball location
     public void update(float dTime) {
         setPosition(box2dBody.getPosition().x - getWidth() / 2, box2dBody.getPosition().y - getHeight() / 2);
@@ -150,8 +153,13 @@ public class Ball extends Sprite {
         CircleShape shape = new CircleShape();
         shape.setRadius(15 / Madball.PPM);
 
+        // Set bit category
+        fixtureDef.filter.categoryBits = Madball.BALL_BIT;
+        // What can Ball collide with
+        fixtureDef.filter.maskBits = Madball.DEFAULT_BIT | Madball.GOLD_BIT;
+
         fixtureDef.shape = shape;
-        box2dBody.createFixture(fixtureDef);
+        box2dBody.createFixture(fixtureDef).setUserData("ball_body");
 
     }
 }

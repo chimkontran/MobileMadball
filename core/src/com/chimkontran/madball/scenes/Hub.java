@@ -22,15 +22,15 @@ public class Hub implements Disposable{
 
     private Integer worldTimer;
     private float timeCount;
-    private Integer score;
+    private static Integer score;
     private Integer level;
 
-    Label levelTextLabel;
-    Label levelLabel;
-    Label scoreTextLabel;
-    Label scoreLabel;
-    Label countdownTextLabel;
-    Label countdownLabel;
+    private Label levelTextLabel;
+    private Label levelLabel;
+    private Label scoreTextLabel;
+    private static Label scoreLabel;
+    private Label countdownTextLabel;
+    private Label countdownLabel;
 
     public Hub(SpriteBatch spriteBatch){
         worldTimer = 60;
@@ -65,6 +65,27 @@ public class Hub implements Disposable{
         // Display table
         stage.addActor(table);
     }
+
+    // Update Timer
+    public void update(float dTime)
+    {
+        timeCount += dTime;
+
+        if (timeCount >= 1)
+        {
+            worldTimer --;
+            countdownLabel.setText(String.format("%02d", worldTimer));
+            timeCount = 0;
+        }
+    }
+
+    // Update Score
+    public static void addScore(int value)
+    {
+        score += value;
+        scoreLabel.setText(String.format("%06d", score));
+    }
+
 
     @Override
     public void dispose() {

@@ -1,6 +1,7 @@
 package com.chimkontran.madball.system;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -42,12 +43,14 @@ public class Controller implements Disposable{
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 upPressed = true;
+                Madball.manager.get("audio/ball_walk.wav", Sound.class).loop();
                 return true;
             }
 
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 upPressed = false;
+                Madball.manager.get("audio/ball_walk.wav", Sound.class).stop();
             }
         });
 
@@ -59,13 +62,14 @@ public class Controller implements Disposable{
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 downPressed = true;
+                Madball.manager.get("audio/ball_walk.wav", Sound.class).loop();
                 return true;
             }
 
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 downPressed = false;
-
+                Madball.manager.get("audio/ball_walk.wav", Sound.class).stop();
             }
         });
 
@@ -77,13 +81,14 @@ public class Controller implements Disposable{
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 leftPressed = true;
+                Madball.manager.get("audio/ball_walk.wav", Sound.class).loop();
                 return true;
             }
 
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 leftPressed = false;
-
+                Madball.manager.get("audio/ball_walk.wav", Sound.class).stop();
             }
         });
 
@@ -95,12 +100,14 @@ public class Controller implements Disposable{
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 rightPressed = true;
+                Madball.manager.get("audio/ball_walk.wav", Sound.class).loop();
                 return true;
             }
 
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 rightPressed = false;
+                Madball.manager.get("audio/ball_walk.wav", Sound.class).stop();
             }
         });
 
@@ -112,6 +119,7 @@ public class Controller implements Disposable{
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 lookUpPressed = true;
+                Madball.manager.get("audio/ball_shoot.wav", Sound.class).play();
                 return true;
             }
 
@@ -129,6 +137,7 @@ public class Controller implements Disposable{
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 lookDownPressed = true;
+                Madball.manager.get("audio/ball_shoot.wav", Sound.class).play();
                 return true;
             }
 
@@ -146,6 +155,7 @@ public class Controller implements Disposable{
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 lookLeftPressed = true;
+                Madball.manager.get("audio/ball_shoot.wav", Sound.class).play();
                 return true;
             }
 
@@ -163,13 +173,12 @@ public class Controller implements Disposable{
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 lookRightPressed = true;
-                System.out.println("LOOK RIGHTPRESSED YO");
+                Madball.manager.get("audio/ball_shoot.wav", Sound.class).play();
                 return true;
             }
 
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                System.out.println("LOOK RIGHT RELEASED YO");
                 lookRightPressed = false;
             }
         });

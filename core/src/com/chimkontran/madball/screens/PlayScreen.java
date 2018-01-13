@@ -3,6 +3,7 @@ package com.chimkontran.madball.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -28,6 +29,7 @@ import com.chimkontran.madball.sprites.Ball;
 import com.chimkontran.madball.system.Controller;
 import com.chimkontran.madball.system.InputTracker;
 import com.chimkontran.madball.tools.Box2DWorldCreator;
+import com.chimkontran.madball.tools.WorldContactListener;
 
 /**
  * Created by chimkontran on 12/12/2017.
@@ -50,10 +52,15 @@ public class PlayScreen implements Screen {
     // Box2d variables
     private World world;
     private Box2DDebugRenderer debugRenderer;
+
+    // Sprite
     private Ball ball;
 
     // Controller
     Controller controller;
+
+    // Sound effect
+    private Music music;
 
     public PlayScreen(Madball game){
         // Add Texture
@@ -89,6 +96,11 @@ public class PlayScreen implements Screen {
 
         // Create controller
         controller = new Controller();
+
+        // Create ContactListener
+        world.setContactListener(new WorldContactListener());
+
+        // Load Sounds
     }
 
     public TextureAtlas getTextureAtlas()
@@ -142,6 +154,9 @@ public class PlayScreen implements Screen {
 
         // Update player
         ball.update(dTime);
+
+        // Update timer
+        hub.update(dTime);
 
         // Make camera follow Ball (player)
         gameCamera.position.x = ball.box2dBody.getPosition().x;

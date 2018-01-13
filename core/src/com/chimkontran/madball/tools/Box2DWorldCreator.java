@@ -10,6 +10,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.chimkontran.madball.Madball;
+import com.chimkontran.madball.sprites.Gold;
 
 /**
  * Created by chimkontran on 12/22/2017.
@@ -35,6 +36,13 @@ public class Box2DWorldCreator {
             shape.setAsBox(rectangle.getWidth() / 2 / Madball.PPM, rectangle.getHeight() / 2 / Madball.PPM);
             fixtureDef.shape = shape;
             body.createFixture(fixtureDef);
+        }
+
+        // Create GOLD Body / Fixture
+        for (MapObject object : map.getLayers().get(3).getObjects().getByType(RectangleMapObject.class)) {
+            Rectangle rectangle = ((RectangleMapObject) object).getRectangle();
+
+            new Gold(world, map, rectangle);
         }
     }
 
