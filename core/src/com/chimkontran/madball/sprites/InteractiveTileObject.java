@@ -12,6 +12,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.chimkontran.madball.Madball;
+import com.chimkontran.madball.screens.PlayScreen;
 
 /**
  * Created by chimkontran on 12/22/2017.
@@ -27,10 +28,10 @@ public abstract class InteractiveTileObject {
     protected Body body;
     protected Fixture fixture;
 
-    public InteractiveTileObject(World world, TiledMap map, Rectangle bounds)
+    public InteractiveTileObject(PlayScreen screen, Rectangle bounds)
     {
-        this.world = world;
-        this.map = map;
+        this.world = screen.getWorld();
+        this.map = screen.getMap();
         this.bounds = bounds;
 
         BodyDef bodyDef = new BodyDef();
@@ -56,6 +57,7 @@ public abstract class InteractiveTileObject {
         fixture.setFilterData(filter);
     }
 
+    // Get CELL that collided
     public TiledMapTileLayer.Cell getCell()
     {
         TiledMapTileLayer layer = (TiledMapTileLayer) map.getLayers().get(1);

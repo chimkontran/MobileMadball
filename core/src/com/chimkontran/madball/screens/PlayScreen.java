@@ -26,6 +26,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.chimkontran.madball.Madball;
 import com.chimkontran.madball.scenes.Hub;
 import com.chimkontran.madball.sprites.Ball;
+import com.chimkontran.madball.sprites.PinkBall;
 import com.chimkontran.madball.system.Controller;
 import com.chimkontran.madball.system.InputTracker;
 import com.chimkontran.madball.tools.Box2DWorldCreator;
@@ -55,6 +56,7 @@ public class PlayScreen implements Screen {
 
     // Sprite
     private Ball ball;
+    private PinkBall pinkBall;
 
     // Controller
     Controller controller;
@@ -89,10 +91,10 @@ public class PlayScreen implements Screen {
         debugRenderer = new Box2DDebugRenderer();
 
         // Create Ball (player)
-        ball = new Ball(world, this);
+        ball = new Ball(this);
 
         // Create World
-        new Box2DWorldCreator(world, map);
+        new Box2DWorldCreator(this);
 
         // Create controller
         controller = new Controller();
@@ -100,7 +102,8 @@ public class PlayScreen implements Screen {
         // Create ContactListener
         world.setContactListener(new WorldContactListener());
 
-        // Load Sounds
+        // Test pink ball
+        pinkBall = new PinkBall(this, 128 / Madball.PPM, 64 / Madball.PPM);
     }
 
     public TextureAtlas getTextureAtlas()
@@ -154,6 +157,7 @@ public class PlayScreen implements Screen {
 
         // Update player
         ball.update(dTime);
+        pinkBall.update(dTime);
 
         // Update timer
         hub.update(dTime);
@@ -191,6 +195,7 @@ public class PlayScreen implements Screen {
         // Render Ball (player)
         game.batch.begin();
         ball.draw(game.batch);
+        pinkBall.draw(game.batch);
         game.batch.end();
 
         // Show Camera
@@ -202,6 +207,16 @@ public class PlayScreen implements Screen {
     public void resize(int width, int height) {
         gamePort.update(width, height);
         controller.resize(width, height);
+    }
+
+    public TiledMap getMap()
+    {
+        return map;
+    }
+
+    public World getWorld()
+    {
+        return world;
     }
 
     @Override

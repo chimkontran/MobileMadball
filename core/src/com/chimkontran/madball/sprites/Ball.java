@@ -39,9 +39,9 @@ public class Ball extends Sprite {
     public Body box2dBody;
     Controller controller;
 
-    public Ball(World world, PlayScreen screen) {
+    public Ball(PlayScreen screen) {
         super(screen.getTextureAtlas().findRegion("swat"));
-        this.world = world;
+        this.world = screen.getWorld();
 
         // Set state
         currentState = State.LOOKING_RIGHT;
@@ -54,10 +54,10 @@ public class Ball extends Sprite {
         controller = new Controller();
 
         // Get texture for Ball (player)
-        ballLookDown = new TextureRegion(getTexture(), 2, 75, 100, 100);
-        ballLookLeft = new TextureRegion(getTexture(), 104, 75, 100, 100);
-        ballLookRight = new TextureRegion(getTexture(), 206, 75, 100, 100);
-        ballLookUP = new TextureRegion(getTexture(), 308, 75, 100, 100);
+        ballLookDown = new TextureRegion(getTexture(), 2, 158, 100, 100);
+        ballLookLeft = new TextureRegion(getTexture(), 104, 158, 100, 100);
+        ballLookRight = new TextureRegion(getTexture(), 206, 158, 100, 100);
+        ballLookUP = new TextureRegion(getTexture(), 308, 158, 100, 100);
 
         defineBall();
         setBounds(0, 0, BALL_WIDTH / Madball.PPM, BALL_HEIGHT / Madball.PPM);
@@ -156,7 +156,10 @@ public class Ball extends Sprite {
         // Set bit category
         fixtureDef.filter.categoryBits = Madball.BALL_BIT;
         // What can Ball collide with
-        fixtureDef.filter.maskBits = Madball.DEFAULT_BIT | Madball.GOLD_BIT;
+        fixtureDef.filter.maskBits = Madball.ENEMY_BIT
+                | Madball.GROUND_BIT
+                | Madball.GOLD_BIT
+                | Madball.OBJECT_BIT;
 
         fixtureDef.shape = shape;
         box2dBody.createFixture(fixtureDef).setUserData("ball_body");

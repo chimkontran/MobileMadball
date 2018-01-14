@@ -10,6 +10,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.chimkontran.madball.Madball;
+import com.chimkontran.madball.screens.PlayScreen;
 import com.chimkontran.madball.sprites.Gold;
 
 /**
@@ -18,8 +19,12 @@ import com.chimkontran.madball.sprites.Gold;
 
 public class Box2DWorldCreator {
 
-    public Box2DWorldCreator(World world, TiledMap map)
+    public Box2DWorldCreator(PlayScreen screen)
     {
+        World world = screen.getWorld();
+        TiledMap map = screen.getMap();
+
+        // Create Body / Fixture variables
         BodyDef bodyDef = new BodyDef();
         PolygonShape shape = new PolygonShape();
         FixtureDef fixtureDef = new FixtureDef();
@@ -35,14 +40,14 @@ public class Box2DWorldCreator {
 
             shape.setAsBox(rectangle.getWidth() / 2 / Madball.PPM, rectangle.getHeight() / 2 / Madball.PPM);
             fixtureDef.shape = shape;
+            fixtureDef.filter.categoryBits = Madball.OBJECT_BIT;
             body.createFixture(fixtureDef);
         }
 
         // Create GOLD Body / Fixture
         for (MapObject object : map.getLayers().get(3).getObjects().getByType(RectangleMapObject.class)) {
             Rectangle rectangle = ((RectangleMapObject) object).getRectangle();
-
-            new Gold(world, map, rectangle);
+            new Gold(screen, rectangle);
         }
     }
 

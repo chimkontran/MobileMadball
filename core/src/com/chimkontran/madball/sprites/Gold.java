@@ -9,20 +9,22 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.chimkontran.madball.Madball;
 import com.chimkontran.madball.scenes.Hub;
+import com.chimkontran.madball.screens.PlayScreen;
 
 /**
  * Created by chimkontran on 1/13/2018.
  */
 
 public class Gold extends InteractiveTileObject{
-    public Gold(World world, TiledMap map, Rectangle bounds) {
-        super(world, map, bounds);
+    public Gold(PlayScreen screen, Rectangle bounds) {
+        super(screen, bounds);
         fixture.setUserData(this);
 
         // Set category bit
         setCategoryFilter(Madball.GOLD_BIT);
     }
 
+    // GOLD coin Disappears
     @Override
     public void onGoldCollected() {
         Gdx.app.log("Collision", "Gold");
